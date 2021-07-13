@@ -18,6 +18,7 @@ function resetForm(event) {
     photoURL: $urlInput.value,
     notes: $notes.value
   });
+  data.nextEntryId += 1;
 
   $title.value = '';
   $urlInput.value = '';

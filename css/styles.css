@@ -1,0 +1,68 @@
+body {
+  margin: 0 auto;
+}
+
+header {
+  padding: 1rem 0 1rem;
+  color: white;
+  font-size: 18px;
+}
+
+.color-scheme {
+  background-color: #552b81;
+  color: white;
+}
+
+.justify-start {
+  justify-content: start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.save-button {
+  margin: 2rem 0 0;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.sans-serif {
+  font-family: sans-serif;
+}
+
+.input-font-size {
+  font-size: 16;
+}
+
+.title-form {
+  font-family: "Roboto", sans-serif;
+}
+
+.title-inputs-height {
+  height: 2rem;
+}
+
+.input-radius {
+  border-radius: 0.8rem;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.margin-header {
+  margin: 1rem 0 1rem;
+}
+
+input:focus,
+#entry-notes:focus {
+  outline-color: #552b81;
+}
+
+.square-image {
+  max-height: 426px;
+}

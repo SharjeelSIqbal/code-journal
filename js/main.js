@@ -3,41 +3,41 @@
 var $title = document.querySelector('#note-title');
 var $urlInput = document.querySelector('#url');
 var $notes = document.querySelector('#entry-notes');
-var $submit = document.querySelector('button');
-var oldEntries;
+var $submit = document.querySelector('form');
+
 function setImage(event) {
 
   document.querySelector('img').setAttribute('src', $urlInput.value);
 }
 
-$urlInput.addEventListener('input', setImage);
+$urlInput.addEventListener('blur', setImage);
 
 function resetForm(event) {
-  data.entries = oldEntries.entries;
   data.entries.push({
     title: $title.value,
     photoURL: $urlInput.value,
     notes: $notes.value
   });
-  data.nextEntryId = oldEntries.nextEntryId;
-  data.nextEntryId += 1;
 
   $title.value = '';
   $urlInput.value = '';
   $notes.value = '';
   document.querySelector('img').setAttribute('src', 'images/placeholder-image-square.jpg');
-  return data;
-}
-
-$submit.addEventListener('click', resetForm);
-
-function storeData(event) {
-  return localStorage.setItem('notepages', JSON.stringify(data));
+  event.preventDefault();
 
 }
-oldEntries = localStorage.getItem('notepages');
-if (oldEntries !== null) {
-  oldEntries = JSON.parse(oldEntries);
+
+$submit.addEventListener('submit', resetForm);
+function getPreviousEntries(event) {
+  return localStorage.setItem('note-pages', JSON.stringify(data));
 }
 
-window.addEventListener('beforeunload', storeData);
+var previousEntries = localStorage.getItem('note-pages');
+if (previousEntries !== null) {
+  previousEntries = JSON.parse(previousEntries);
+  data.entries = previousEntries.entries;
+  if (previousEntries.entries.length !== 1) {
+    data.nextEntryId = previousEntries.entries.length;
+  }
+}
+$submit.addEventListener('submit', getPreviousEntries);

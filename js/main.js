@@ -22,9 +22,9 @@ function resetForm(event) {
   data.nextEntryId = oldEntries.nextEntryId;
   data.nextEntryId += 1;
 
-  document.querySelector('#note.title').reset();
-  document.querySelector('#url').reset();
-  document.querySelector('#entry-notes').reset();
+  $title.value = '';
+  $urlInput.value = '';
+  $notes.value = '';
   document.querySelector('img').setAttribute('src', 'images/placeholder-image-square.jpg');
   return data;
 }

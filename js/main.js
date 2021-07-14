@@ -18,9 +18,9 @@ function resetForm(event) {
     title: $title.value,
     photoURL: $urlInput.value,
     notes: $notes.value,
-    entryId: data.entries.length
+    entryId: data.nextEntryId
   });
-  data.nextEntryId = data.entries.length;
+  data.nextEntryId++;
   $submit.reset();
   document.querySelector('img').setAttribute('src', 'images/placeholder-image-square.jpg');
 

@@ -24,7 +24,6 @@ header {
 .save-button {
   padding: 0.5rem 1.2rem;
   border: none;
-  border-radius: 0.25rem;
   font-size: 16px;
   font-weight: normal;
 }
@@ -74,4 +73,37 @@ input:focus,
 
 .square-image {
   max-height: 426px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.entry-title {
+  font-size: 27px;
+}
+
+.entry-bottom-margin {
+  margin-bottom: 3rem;
+}
+
+.save-button,
+.new {
+  border-radius: 0.25rem;
+}
+
+.active {
+  display: show;
+}
+
+.hidden {
+  display: none;
+}
+
+.no-padding-inline-start {
+  padding-inline-start: 0;
+}
+
+.image-bottom-margin {
+  margin-bottom: 1rem;
 }

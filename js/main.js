@@ -13,32 +13,17 @@ function setImage(event) {
 $urlInput.addEventListener('blur', setImage);
 
 function resetForm(event) {
+  event.preventDefault();
   data.entries.push({
     title: $title.value,
     photoURL: $urlInput.value,
-    notes: $notes.value
+    notes: $notes.value,
+    entryId: data.entries.length
   });
-  data.nextEntryId += 1;
-
-  $title.value = '';
-  $urlInput.value = '';
-  $notes.value = '';
+  data.nextEntryId = data.entries.length;
+  $submit.reset();
   document.querySelector('img').setAttribute('src', 'images/placeholder-image-square.jpg');
-  event.preventDefault();
 
 }
 
 $submit.addEventListener('submit', resetForm);
-function getPreviousEntries(event) {
-  return localStorage.setItem('note-pages', JSON.stringify(data));
-}
-
-var previousEntries = localStorage.getItem('note-pages');
-if (previousEntries !== null) {
-  previousEntries = JSON.parse(previousEntries);
-  data.entries = previousEntries.entries;
-  if (previousEntries.entries.length !== 1) {
-    data.nextEntryId = previousEntries.entries.length;
-  }
-}
-$submit.addEventListener('submit', getPreviousEntries);

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Journal</title>
+  <link rel="icon" href="images/favicon.ico">
+  <link
+    rel="stylesheet"
+    crossorigin="anonymous"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="color-scheme">
+    <div class="container">
+      <div class="column-full sans-serif">
+        Code Journal
+      </div>
+    </div>
+    </header>
+  <main class="container">
+    <div data-view="entry-form">
+        <form action="submit">
+          <div class="justify-between row">
+            <h1 class="bold title-form column-full">New Entry</h1>
+            <img class="column-half image-padding square-image" name="set-image" src="images/placeholder-image-square.jpg" alt="userImage">
+            <div class="column-half">
+              <h3 class="title-form input-title-block-margin-reset">Title</h3>
+              <input class="title-inputs-height input-font-size sans-serif column-full" id="note-title" type="name" required>
+              <h3 class="title-form">Photo URL</h3>
+              <input class="title-inputs-height input-font-size sans-serif column-full" id="url" type="url" required>
+            </div>
+          </div>
+          <div class= "row">
+            <h3 class="title-form column-full">Notes</h3>
+            <div class="column-full">
+              <textarea name="notes" id="entry-notes" cols="100" rows="10" class="sans-serif input-font-size column-full" required></textarea>
+            </div>
+            <div class="justify-end row column-full">
+              <button class="color-scheme save-button sans-serif">SAVE</button>
+            </div>
+          </div>
+        </form>
+    </div>
+  </main>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

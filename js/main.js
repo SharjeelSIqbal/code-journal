@@ -32,7 +32,7 @@ $submit.addEventListener('submit', resetForm);
 // New entry *END*
 
 // For Dom Creation *START*
-function newEntryCreation(entries, idNumber) {
+function newEntryCreation(id) {
   var listItem = document.createElement('li');
   listItem.className = 'entry-bottom-margin';
   var listFlex = document.createElement('div');
@@ -46,18 +46,42 @@ function newEntryCreation(entries, idNumber) {
   var entryNotes = document.createElement('p');
   entryNotes.className = 'input-font-size sans-serif';
 
+  entryImage.setAttribute('src', data.entries[id].photoURL);
+  entryTitle.textContent = data.entries[id].title;
+  entryNotes.textContent = data.entries[id].notes;
+
   listItem.appendChild(listFlex);
   listFlex.appendChild(entryImage);
   listFlex.appendChild(columnHalfDiv);
   columnHalfDiv.appendChild(entryTitle);
   columnHalfDiv.appendChild(entryNotes);
-  entryImage.setAttribute('src', data.entries[idNumber].photoURL);
-  entryTitle.textContent = data.entries[idNumber].title;
-  entryNotes.textContent = data.entries[idNumber].notes;
+
   return listItem;
 }
-var entryList = document.querySelector('ul');
-for (var i = data.entries[data.entries.length - 1].entryId; i >= 0; i--) {
-  entryList.appendChild(newEntryCreation(data.entries, i));
+
+function loadPage(event) {
+  var entryList = document.querySelector('ul');
+  for (var i = data.entries.length - 1; i >= 0; i--) {
+    entryList.appendChild(newEntryCreation(i));
+  }
 }
-// Dom Creation *END*
+window.addEventListener('DOMContentLoaded', loadPage);
+// Switch Tabs *START*
+
+function tabView(event) {
+  event.preventDefault();
+  var dataView = event.target.getAttribute('data-view');
+  var switching = document.querySelectorAll('.tab-view');
+  for (var i = 0; i < switching.length; i++) {
+    if (switching[i].getAttribute('data-view') === dataView) {
+      switching[i].className = 'tab-view';
+    } else {
+      switching[i].className = 'tab-view hidden';
+    }
+  }
+}
+var entriesLink = document.querySelector('.tab');
+var newEntry = document.querySelector('.new');
+entriesLink.addEventListener('click', tabView);
+newEntry.addEventListener('click', tabView);
+// Switching Tabs *END*

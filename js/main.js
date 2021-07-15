@@ -25,6 +25,7 @@ function resetForm(event) {
   });
   data.nextEntryId++;
   $submit.reset();
+
   document.querySelector('#form-image').setAttribute('src', 'images/placeholder-image-square.jpg');
 
 }
@@ -96,13 +97,14 @@ function newAddition(event) {
   entryList.prepend(newEntryCreation(data.entries.length - 1));
   var switching = document.querySelectorAll('.tab-view');
   for (var i = 0; i < switching.length; i++) {
-    if (switching[i].className === 'tab-view active') {
+    if (switching[i].className === 'tab-view') {
       switching[i].className = 'tab-view hidden';
     } else {
-      switching[i].className = 'tab-view active';
+      switching[i].className = 'tab-view';
     }
   }
 }
 $submit.addEventListener('submit', newAddition);
+
 // New entry appearance and switching tabs after submitting
 //* END*

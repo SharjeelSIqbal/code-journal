@@ -13,10 +13,6 @@ header {
   color: white;
 }
 
-.justify-start {
-  justify-content: start;
-}
-
 .justify-between {
   justify-content: space-between;
 }
@@ -48,16 +44,8 @@ header {
   height: 2.5rem;
 }
 
-.input-radius {
-  border-radius: 0.8rem;
-}
-
 .justify-end {
   justify-content: flex-end;
-}
-
-.margin-header {
-  margin: 1rem 0 1rem;
 }
 
 input,
@@ -77,10 +65,6 @@ input:focus,
 
 ul {
   list-style-type: none;
-}
-
-.entry-title {
-  font-size: 27px;
 }
 
 .entry-bottom-margin {

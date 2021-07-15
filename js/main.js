@@ -9,10 +9,11 @@ var $submit = document.querySelector('form');
 
 function setImage(event) {
 
-  document.querySelector('img').setAttribute('src', $urlInput.value);
+  var image = document.querySelector('#form-image');
+  image.setAttribute('src', $urlInput.value);
 }
 
-$urlInput.addEventListener('blur', setImage);
+$urlInput.addEventListener('input', setImage);
 
 function resetForm(event) {
   event.preventDefault();
@@ -24,7 +25,7 @@ function resetForm(event) {
   });
   data.nextEntryId++;
   $submit.reset();
-  document.querySelector('img').setAttribute('src', 'images/placeholder-image-square.jpg');
+  document.querySelector('#form-image').setAttribute('src', 'images/placeholder-image-square.jpg');
 
 }
 
@@ -66,8 +67,10 @@ function loadPage(event) {
   }
 }
 window.addEventListener('DOMContentLoaded', loadPage);
-// Switch Tabs *START*
 
+// DOM Creation *END*
+
+// Switch Tabs *START*
 function tabView(event) {
   event.preventDefault();
   var dataView = event.target.getAttribute('data-view');
@@ -85,3 +88,21 @@ var newEntry = document.querySelector('.new');
 entriesLink.addEventListener('click', tabView);
 newEntry.addEventListener('click', tabView);
 // Switching Tabs *END*
+
+// New entry appearance and switching tabs after submitting
+//* START*
+function newAddition(event) {
+  var entryList = document.querySelector('ul');
+  entryList.prepend(newEntryCreation(data.entries.length - 1));
+  var switching = document.querySelectorAll('.tab-view');
+  for (var i = 0; i < switching.length; i++) {
+    if (switching[i].className === 'tab-view active') {
+      switching[i].className = 'tab-view hidden';
+    } else {
+      switching[i].className = 'tab-view active';
+    }
+  }
+}
+$submit.addEventListener('submit', newAddition);
+// New entry appearance and switching tabs after submitting
+//* END*

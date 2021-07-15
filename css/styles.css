@@ -13,6 +13,10 @@ header {
   color: white;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .justify-between {
   justify-content: space-between;
 }

@@ -13,7 +13,7 @@ function setImage(event) {
   image.setAttribute('src', $urlInput.value);
 }
 
-$urlInput.addEventListener('input', setImage);
+$urlInput.addEventListener('blur', setImage);
 
 function resetForm(event) {
   event.preventDefault();
@@ -66,6 +66,11 @@ function loadPage(event) {
   for (var i = data.entries.length - 1; i >= 0; i--) {
     entryList.appendChild(newEntryCreation(i));
   }
+  var noEntries = document.querySelector('[name="no-entry"');
+  if (data.entries.length !== 0) {
+    noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
+  }
+
 }
 window.addEventListener('DOMContentLoaded', loadPage);
 
@@ -103,8 +108,11 @@ function newAddition(event) {
       switching[i].className = 'tab-view';
     }
   }
+  var noEntries = document.querySelector('[name="no-entry"');
+  if (data.entries.length !== 0) {
+    noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
+  }
 }
 $submit.addEventListener('submit', newAddition);
-
 // New entry appearance and switching tabs after submitting
 //* END*

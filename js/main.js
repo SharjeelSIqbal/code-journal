@@ -77,7 +77,7 @@ window.addEventListener('DOMContentLoaded', loadPage);
 // DOM Creation *END*
 
 // Switch Tabs *START*
-function tabView(event) {
+function switchView(event) {
   event.preventDefault();
   var dataView = event.target.getAttribute('data-view');
   var switching = document.querySelectorAll('.tab-view');
@@ -88,11 +88,17 @@ function tabView(event) {
       switching[i].className = 'tab-view hidden';
     }
   }
+  if (event.target === $submit) {
+    switching[0].className = 'tab-view';
+    switching[1].className = 'tab-view hidden';
+  }
 }
+
 var entriesLink = document.querySelector('.tab');
 var newEntry = document.querySelector('.new');
-entriesLink.addEventListener('click', tabView);
-newEntry.addEventListener('click', tabView);
+entriesLink.addEventListener('click', switchView);
+newEntry.addEventListener('click', switchView);
+$submit.addEventListener('submit', switchView);
 // Switching Tabs *END*
 
 // New entry appearance and switching tabs after submitting
@@ -100,14 +106,7 @@ newEntry.addEventListener('click', tabView);
 function newAddition(event) {
   var entryList = document.querySelector('ul');
   entryList.prepend(newEntryCreation(data.entries.length - 1));
-  var switching = document.querySelectorAll('.tab-view');
-  for (var i = 0; i < switching.length; i++) {
-    if (switching[i].className === 'tab-view') {
-      switching[i].className = 'tab-view hidden';
-    } else {
-      switching[i].className = 'tab-view';
-    }
-  }
+
   var noEntries = document.querySelector('[name="no-entry"');
   if (data.entries.length !== 0) {
     noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';

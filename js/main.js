@@ -15,7 +15,7 @@ function setImage(event) {
 
 $urlInput.addEventListener('blur', setImage);
 
-function resetForm(event) {
+function submitForm(event) {
   event.preventDefault();
   data.entries.push({
     title: $title.value,
@@ -25,11 +25,19 @@ function resetForm(event) {
   });
   data.nextEntryId++;
   $submit.reset();
+  var entryList = document.querySelector('ul');
+  entryList.prepend(newEntryCreation(data.entries.length - 1));
+
+  var noEntries = document.querySelector('[name="no-entry"');
+  if (data.entries.length !== 0) {
+    noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
+  }
+  switchView('entries');
 
   document.querySelector('#form-image').setAttribute('src', 'images/placeholder-image-square.jpg');
 
 }
-$submit.addEventListener('submit', resetForm);
+$submit.addEventListener('submit', submitForm);
 // New entry *END*
 
 // For Dom Creation *START*
@@ -81,7 +89,6 @@ function switchViewEvent(event) {
   var dataView = event.target.getAttribute('data-view');
   switchView(dataView);
 }
-
 function switchView(string) {
 
   var switching = document.querySelectorAll('.tab-view');
@@ -93,28 +100,8 @@ function switchView(string) {
     }
   }
 }
-
 var entriesLink = document.querySelector('.tab');
 var newEntry = document.querySelector('.new');
 entriesLink.addEventListener('click', switchViewEvent);
 newEntry.addEventListener('click', switchViewEvent);
-$submit.addEventListener('submit', function () {
-  event.preventDefault();
-  switchView('entries');
-});
 // Switching Tabs *END*
-
-// New entry appearance and switching tabs after submitting
-//* START*
-function newAddition(event) {
-  var entryList = document.querySelector('ul');
-  entryList.prepend(newEntryCreation(data.entries.length - 1));
-
-  var noEntries = document.querySelector('[name="no-entry"');
-  if (data.entries.length !== 0) {
-    noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
-  }
-}
-$submit.addEventListener('submit', newAddition);
-// New entry appearance and switching tabs after submitting
-//* END*

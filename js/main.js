@@ -29,7 +29,6 @@ function resetForm(event) {
   document.querySelector('#form-image').setAttribute('src', 'images/placeholder-image-square.jpg');
 
 }
-
 $submit.addEventListener('submit', resetForm);
 // New entry *END*
 
@@ -77,28 +76,32 @@ window.addEventListener('DOMContentLoaded', loadPage);
 // DOM Creation *END*
 
 // Switch Tabs *START*
-function switchView(event) {
+function switchViewEvent(event) {
   event.preventDefault();
   var dataView = event.target.getAttribute('data-view');
+  switchView(dataView);
+}
+
+function switchView(string) {
+
   var switching = document.querySelectorAll('.tab-view');
   for (var i = 0; i < switching.length; i++) {
-    if (switching[i].getAttribute('data-view') === dataView) {
+    if (switching[i].getAttribute('data-view') === string) {
       switching[i].className = 'tab-view';
     } else {
       switching[i].className = 'tab-view hidden';
     }
   }
-  if (event.target === $submit) {
-    switching[0].className = 'tab-view';
-    switching[1].className = 'tab-view hidden';
-  }
 }
 
 var entriesLink = document.querySelector('.tab');
 var newEntry = document.querySelector('.new');
-entriesLink.addEventListener('click', switchView);
-newEntry.addEventListener('click', switchView);
-$submit.addEventListener('submit', switchView);
+entriesLink.addEventListener('click', switchViewEvent);
+newEntry.addEventListener('click', switchViewEvent);
+$submit.addEventListener('submit', function () {
+  event.preventDefault();
+  switchView('entries');
+});
 // Switching Tabs *END*
 
 // New entry appearance and switching tabs after submitting

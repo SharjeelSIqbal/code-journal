@@ -113,3 +113,14 @@ ul {
 .align-center {
   align-items: center;
 }
+
+.edit-icon {
+  font-size: 24px;
+  color: #552b81;
+  transform: rotate(90deg);
+  margin-bottom: 2rem;
+}
+
+.entry-title {
+  font-size: 24px;
+}

@@ -6,6 +6,7 @@ var $title = document.querySelector('#note-title');
 var $urlInput = document.querySelector('#url');
 var $notes = document.querySelector('#entry-notes');
 var $submit = document.querySelector('form');
+var $ul = document.querySelector('ul');
 
 function setImage(event) {
 
@@ -35,21 +36,26 @@ function submitForm(event) {
   switchView('entries');
 
   document.querySelector('#form-image').setAttribute('src', 'images/placeholder-image-square.jpg');
-
 }
 $submit.addEventListener('submit', submitForm);
+
 // New entry *END*
 
 // For Dom Creation *START*
 function newEntryCreation(id) {
   var listItem = document.createElement('li');
-  listItem.className = 'entry-bottom-margin';
-  var listFlex = document.createElement('div');
-  listFlex.className = 'justify-between row';
+  listItem.className = 'entry-bottom-margin justify-between row';
+  listItem.setAttribute('data-entry-id', id);
   var entryImage = document.createElement('img');
   entryImage.className = 'column-half image-padding square-image image-bottom-margin';
   var columnHalfDiv = document.createElement('div');
   columnHalfDiv.className = 'column-half';
+  var halfDiv = document.createElement('div');
+  halfDiv.className = 'row justify-between';
+  var editIcon = document.createElement('a');
+  editIcon.className = 'edit-icon title-margin no-text-decoration edit hidden';
+  editIcon.innerHTML = '&#9998;';
+  editIcon.setAttribute('href', '""');
   var entryTitle = document.createElement('h3');
   entryTitle.className = 'entry-title sans-serif input-title-block-margin-reset title-margin';
   var entryNotes = document.createElement('p');
@@ -59,10 +65,11 @@ function newEntryCreation(id) {
   entryTitle.textContent = data.entries[id].title;
   entryNotes.textContent = data.entries[id].notes;
 
-  listItem.appendChild(listFlex);
-  listFlex.appendChild(entryImage);
-  listFlex.appendChild(columnHalfDiv);
-  columnHalfDiv.appendChild(entryTitle);
+  listItem.appendChild(entryImage);
+  listItem.appendChild(columnHalfDiv);
+  columnHalfDiv.appendChild(halfDiv);
+  halfDiv.appendChild(entryTitle);
+  halfDiv.appendChild(editIcon);
   columnHalfDiv.appendChild(entryNotes);
 
   return listItem;
@@ -100,8 +107,25 @@ function switchView(string) {
     }
   }
 }
-var entriesLink = document.querySelector('.tab');
-var newEntry = document.querySelector('.new');
-entriesLink.addEventListener('click', switchViewEvent);
-newEntry.addEventListener('click', switchViewEvent);
+var $entriesLink = document.querySelector('.tab');
+var $newEntry = document.querySelector('.new');
+$entriesLink.addEventListener('click', switchViewEvent);
+$newEntry.addEventListener('click', switchViewEvent);
 // Switching Tabs *END*
+
+// Clicking to edit *START*
+function editNotes(event) {
+  var $listAll = document.querySelectorAll('.edit');
+  for (var i = 0; i < $listAll.length; i++) {
+    var li = $listAll[i].closest('li');
+    var $edit = li.querySelector('.edit');
+    if ($edit.className === 'edit-icon title-margin no-text-decoration edit') {
+      $edit.className = 'edit-icon title-margin no-text-decoration edit hidden';
+    }
+    if (li === event.target.closest('li')) {
+      $edit.className = 'edit-icon title-margin no-text-decoration edit';
+    }
+  }
+
+}
+$ul.addEventListener('click', editNotes, true);

@@ -1,35 +1,48 @@
 /* global data */
 /* exported data */
 
-// User can create new entry *START*
 var $title = document.querySelector('#note-title');
 var $urlInput = document.querySelector('#url');
 var $notes = document.querySelector('#entry-notes');
 var $submit = document.querySelector('form');
 var $ul = document.querySelector('ul');
+var $editEntryFormTitles = document.querySelectorAll('form>h1');
 
 function setImage(event) {
-
   var image = document.querySelector('#form-image');
   image.setAttribute('src', $urlInput.value);
 }
 
-$urlInput.addEventListener('blur', setImage);
+$urlInput.addEventListener('input', setImage);
 
 function submitForm(event) {
   event.preventDefault();
-  data.entries.push({
-    title: $title.value,
-    photoURL: $urlInput.value,
-    notes: $notes.value,
-    entryId: data.nextEntryId
-  });
-  data.nextEntryId++;
-  $submit.reset();
   var entryList = document.querySelector('ul');
-  entryList.prepend(newEntryCreation(data.entries.length - 1));
-
   var noEntries = document.querySelector('[name="no-entry"');
+  if (data.editing !== null) {
+    data.entries.splice(data.editing, 1, {
+      title: $title.value,
+      photoURL: $urlInput.value,
+      notes: $notes.value,
+      entryId: data.editing
+    });
+
+    entryList.prepend(newEntryCreation(data.editing));
+    $submit.reset();
+  } else {
+    data.entries.push({
+      title: $title.value,
+      photoURL: $urlInput.value,
+      notes: $notes.value,
+      entryId: data.nextEntryId
+    });
+    data.nextEntryId++;
+    $submit.reset();
+    entryList.prepend(newEntryCreation(data.entries.length - 1));
+  }
+
+  data.editing = null;
+
   if (data.entries.length !== 0) {
     noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
   }
@@ -39,31 +52,29 @@ function submitForm(event) {
 }
 $submit.addEventListener('submit', submitForm);
 
-// New entry *END*
-
-// For Dom Creation *START*
 function newEntryCreation(id) {
   var listItem = document.createElement('li');
-  listItem.className = 'entry-bottom-margin justify-between row';
-  listItem.setAttribute('data-entry-id', id);
   var entryImage = document.createElement('img');
-  entryImage.className = 'column-half image-padding square-image image-bottom-margin';
   var columnHalfDiv = document.createElement('div');
-  columnHalfDiv.className = 'column-half';
   var halfDiv = document.createElement('div');
-  halfDiv.className = 'row justify-between';
   var editIcon = document.createElement('a');
-  editIcon.className = 'edit-icon title-margin no-text-decoration edit hidden';
-  editIcon.innerHTML = '&#9998;';
-  editIcon.setAttribute('href', '""');
   var entryTitle = document.createElement('h3');
-  entryTitle.className = 'entry-title sans-serif input-title-block-margin-reset title-margin';
   var entryNotes = document.createElement('p');
+
+  listItem.className = 'entry-bottom-margin justify-between row';
+  entryImage.className = 'column-half image-padding square-image image-bottom-margin';
+  columnHalfDiv.className = 'column-half';
+  halfDiv.className = 'row justify-between';
+  editIcon.className = 'column-half edit-icon title-margin no-text-decoration edit hidden';
+  entryTitle.className = 'column-half entry-title sans-serif input-title-block-margin-reset title-margin';
   entryNotes.className = 'input-font-size sans-serif';
 
+  listItem.setAttribute('data-entry-id', id);
+  editIcon.setAttribute('href', '""');
   entryImage.setAttribute('src', data.entries[id].photoURL);
   entryTitle.textContent = data.entries[id].title;
   entryNotes.textContent = data.entries[id].notes;
+  editIcon.innerHTML = '&#9998;';
 
   listItem.appendChild(entryImage);
   listItem.appendChild(columnHalfDiv);
@@ -77,22 +88,23 @@ function newEntryCreation(id) {
 
 function loadPage(event) {
   var entryList = document.querySelector('ul');
+  var noEntries = document.querySelector('[name="no-entry"');
+
   for (var i = data.entries.length - 1; i >= 0; i--) {
     entryList.appendChild(newEntryCreation(i));
   }
-  var noEntries = document.querySelector('[name="no-entry"');
   if (data.entries.length !== 0) {
     noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
   }
-
 }
 window.addEventListener('DOMContentLoaded', loadPage);
 
-// DOM Creation *END*
-
-// Switch Tabs *START*
 function switchViewEvent(event) {
   event.preventDefault();
+  if (event.target === $newEntry && data.editing === null) {
+    $editEntryFormTitles[1].className = 'bold title-form column-full hidden';
+    $editEntryFormTitles[0].className = 'bold title-form column-full';
+  }
   var dataView = event.target.getAttribute('data-view');
   switchView(dataView);
 }
@@ -111,21 +123,34 @@ var $entriesLink = document.querySelector('.tab');
 var $newEntry = document.querySelector('.new');
 $entriesLink.addEventListener('click', switchViewEvent);
 $newEntry.addEventListener('click', switchViewEvent);
-// Switching Tabs *END*
 
-// Clicking to edit *START*
 function editNotes(event) {
   var $listAll = document.querySelectorAll('.edit');
+
   for (var i = 0; i < $listAll.length; i++) {
     var li = $listAll[i].closest('li');
+    var $dataEntryId = li.getAttribute('data-entry-id');
     var $edit = li.querySelector('.edit');
+
     if ($edit.className === 'edit-icon title-margin no-text-decoration edit') {
       $edit.className = 'edit-icon title-margin no-text-decoration edit hidden';
     }
+
     if (li === event.target.closest('li')) {
       $edit.className = 'edit-icon title-margin no-text-decoration edit';
     }
-  }
 
+    if (event.target === $edit) {
+      event.preventDefault();
+      switchView('entry-form');
+      $editEntryFormTitles[0].className = 'bold title-form column-full hidden';
+      $editEntryFormTitles[1].className = 'bold title-form column-full';
+      $title.value = data.entries[parseInt($dataEntryId)].title;
+      $urlInput.value = data.entries[parseInt($dataEntryId)].photoURL;
+      $notes.value = data.entries[parseInt($dataEntryId)].notes;
+      li.remove();
+      data.editing = parseInt($dataEntryId);
+    }
+  }
 }
-$ul.addEventListener('click', editNotes, true);
+$ul.addEventListener('click', editNotes);

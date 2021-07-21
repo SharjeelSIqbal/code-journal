@@ -26,8 +26,10 @@ function submitForm(event) {
       notes: $notes.value,
       entryId: data.editing
     });
-
-    entryList.prepend(newEntryCreation(data.editing));
+    updateData(data.editing);
+    var li = entryList.querySelectorAll('li');
+    li[data.editing] = newEntryCreation(data.editing);
+    loadPage();
     $submit.reset();
   } else {
     data.entries.push({
@@ -89,8 +91,11 @@ function newEntryCreation(id) {
 function loadPage(event) {
   var entryList = document.querySelector('ul');
   var noEntries = document.querySelector('[name="no-entry"');
-
-  for (var i = data.entries.length - 1; i >= 0; i--) {
+  var listItems = document.querySelectorAll('li');
+  for (var i = 0; i < listItems.length; i++) {
+    listItems[i].remove();
+  }
+  for (i = data.entries.length - 1; i >= 0; i--) {
     entryList.appendChild(newEntryCreation(i));
   }
   if (data.entries.length !== 0) {
@@ -148,9 +153,13 @@ function editNotes(event) {
       $title.value = data.entries[parseInt($dataEntryId)].title;
       $urlInput.value = data.entries[parseInt($dataEntryId)].photoURL;
       $notes.value = data.entries[parseInt($dataEntryId)].notes;
-      li.remove();
       data.editing = parseInt($dataEntryId);
     }
   }
 }
 $ul.addEventListener('click', editNotes);
+
+function updateData(number) {
+  var li = document.querySelectorAll('li');
+  li[number].querySelector('p').textContent = data.entries[number].notes;
+}

@@ -70,7 +70,7 @@ function newEntryCreation(id) {
   columnHalfDiv.className = 'column-half';
   halfDiv.className = 'row justify-between';
   editIcon.className = 'column-half edit-icon title-margin no-text-decoration edit hidden';
-  entryTitle.className = 'column-half entry-title sans-serif input-title-block-margin-reset title-margin';
+  entryTitle.className = 'entry-title sans-serif input-title-block-margin-reset title-margin';
   entryNotes.className = 'input-font-size sans-serif';
 
   listItem.setAttribute('data-entry-id', id);

@@ -121,3 +121,28 @@ ul {
 .entry-title {
   font-size: 24px;
 }
+
+.delete {
+  color: red;
+}
+
+.confirm {
+  background-color: #dd2727;
+  color: white;
+}
+
+.cancel {
+  background-color: #b6b6b6;
+}
+
+.container-modal {
+  margin: 1rem auto;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.delete-entry {
+  font-weight: normal;
+}

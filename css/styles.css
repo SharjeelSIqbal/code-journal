@@ -42,6 +42,7 @@ header {
 
 .input-title-block-margin-reset {
   margin-block-start: 0;
+  padding: 0;
 }
 
 .title-inputs-height {
@@ -84,10 +85,6 @@ ul {
   padding: 0.75rem 1rem;
 }
 
-.active {
-  display: show;
-}
-
 .hidden {
   display: none;
 }
@@ -112,4 +109,15 @@ ul {
 
 .align-center {
   align-items: center;
+}
+
+.edit-icon {
+  font-size: 24px;
+  color: #552b81;
+  transform: rotate(90deg);
+  margin-bottom: 2rem;
+}
+
+.entry-title {
+  font-size: 24px;
 }

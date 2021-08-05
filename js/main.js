@@ -26,11 +26,11 @@ function submitForm(event) {
       notes: $notes.value,
       entryId: data.editing
     });
-    updateData(data.editing);
-    var li = entryList.querySelectorAll('li');
-    li[data.editing] = newEntryCreation(data.editing);
-    loadPage();
+    var li = entryList.querySelector('[data-entry-id="' + data.editing + '"]');
+    var editedItem = newEntryCreation(data.editing);
+    $ul.replaceChild(editedItem, li);
     $submit.reset();
+    data.editing = null;
   } else {
     data.entries.push({
       title: $title.value,
@@ -91,11 +91,7 @@ function newEntryCreation(id) {
 function loadPage(event) {
   var entryList = document.querySelector('ul');
   var noEntries = document.querySelector('[name="no-entry"');
-  var listItems = document.querySelectorAll('li');
-  for (var i = 0; i < listItems.length; i++) {
-    listItems[i].remove();
-  }
-  for (i = data.entries.length - 1; i >= 0; i--) {
+  for (var i = data.entries.length - 1; i >= 0; i--) {
     entryList.appendChild(newEntryCreation(i));
   }
   if (data.entries.length !== 0) {
@@ -158,8 +154,3 @@ function editNotes(event) {
   }
 }
 $ul.addEventListener('click', editNotes);
-
-function updateData(number) {
-  var li = document.querySelectorAll('li');
-  li[number].querySelector('p').textContent = data.entries[number].notes;
-}

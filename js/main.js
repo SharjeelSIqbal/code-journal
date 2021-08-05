@@ -117,7 +117,11 @@ function switchView(string) {
   for (var i = 0; i < switching.length; i++) {
     if (switching[i].getAttribute('data-view') === string) {
       switching[i].className = 'tab-view';
+      $editEntryFormTitles[0].className = 'bold title-form column-full';
+      $editEntryFormTitles[1].className = 'hidden';
       $submit.reset();
+      data.editing = null;
+      $delete.className = 'delete hidden';
     } else {
       switching[i].className = 'tab-view hidden';
     }

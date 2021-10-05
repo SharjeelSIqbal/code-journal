@@ -12,8 +12,8 @@
     integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
   <header class="color-scheme">
@@ -29,7 +29,7 @@
   <main class="container">
     <div data-view="entries"  class="tab-view active">
     <div name="entries-tab" class="row justify-between align-center">
-        <h1 class="bold title-form column-half">Entries</h1>
+        <h1 class="bold title-form">Entries</h1>
         <a href="" data-view="entry-form" class="new-tab color-scheme no-text-decoration new">NEW</a>
         <h3 name="no-entry" class="column-full sans-serif font-size row justify-center align-center">No Entries Logged. Please create an entry.</h3>
       </div>
@@ -56,11 +56,26 @@
             <textarea name="notes" id="entry-notes" cols="100" rows="10" class="sans-serif input-font-size column-full"
               required></textarea>
           </div>
-          <div class="justify-end row column-full">
+          <div class="justify-between row column-full">
+            <a id="delete-link" class="delete hidden" href="">Delete Entry</a>
             <button class="color-scheme save-button sans-serif">SAVE</button>
           </div>
         </div>
       </form>
+    </div>
+    <div id="modal" class="hidden">
+      <div class="modal-background"></div>
+      <div class="modal">
+        <div class="container-modal">
+          <div class="column-full row justify-center align-center">
+            <h2 class="delete-entry sans-serif">Are you sure you want to delete this entry?</h2>
+          </div>
+          <div class="column-full row justify-between align-center">
+            <button class="cancel delete-padding sans-serif">CANCEL</button>
+            <button class="confirm delete-padding sans-serif">CONFIRM</button>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
   <script src="js/data.js"></script>

@@ -7,6 +7,8 @@ var $notes = document.querySelector('#entry-notes');
 var $submit = document.querySelector('form');
 var $ul = document.querySelector('ul');
 var $editEntryFormTitles = document.querySelectorAll('form>h1');
+var $delete = document.querySelector('.delete');
+var $modal = document.querySelector('#modal');
 
 function setImage(event) {
   var image = document.querySelector('#form-image');
@@ -17,6 +19,7 @@ $urlInput.addEventListener('input', setImage);
 
 function submitForm(event) {
   event.preventDefault();
+
   var entryList = document.querySelector('ul');
   var noEntries = document.querySelector('[name="no-entry"');
   if (data.editing !== null) {
@@ -44,7 +47,6 @@ function submitForm(event) {
   }
 
   data.editing = null;
-
   if (data.entries.length !== 0) {
     noEntries.className = 'column-full sans-serif font-size row justify-center align-center hidden';
   }
@@ -68,7 +70,7 @@ function newEntryCreation(id) {
   columnHalfDiv.className = 'column-half';
   halfDiv.className = 'row justify-between';
   editIcon.className = 'column-half edit-icon title-margin no-text-decoration edit hidden';
-  entryTitle.className = 'column-half entry-title sans-serif input-title-block-margin-reset title-margin';
+  entryTitle.className = 'entry-title sans-serif input-title-block-margin-reset title-margin';
   entryNotes.className = 'input-font-size sans-serif';
 
   listItem.setAttribute('data-entry-id', id);
@@ -115,6 +117,11 @@ function switchView(string) {
   for (var i = 0; i < switching.length; i++) {
     if (switching[i].getAttribute('data-view') === string) {
       switching[i].className = 'tab-view';
+      $editEntryFormTitles[0].className = 'bold title-form column-full';
+      $editEntryFormTitles[1].className = 'hidden';
+      $submit.reset();
+      data.editing = null;
+      $delete.className = 'delete hidden';
     } else {
       switching[i].className = 'tab-view hidden';
     }
@@ -127,7 +134,8 @@ $newEntry.addEventListener('click', switchViewEvent);
 
 function editNotes(event) {
   var $listAll = document.querySelectorAll('.edit');
-
+  var deleteLink = document.querySelector('#delete-link');
+  deleteLink.className = 'justify-between row column-full';
   for (var i = 0; i < $listAll.length; i++) {
     var li = $listAll[i].closest('li');
     var $dataEntryId = li.getAttribute('data-entry-id');
@@ -144,6 +152,7 @@ function editNotes(event) {
     if (event.target === $edit) {
       event.preventDefault();
       switchView('entry-form');
+      $delete.className = 'delete';
       $editEntryFormTitles[0].className = 'bold title-form column-full hidden';
       $editEntryFormTitles[1].className = 'bold title-form column-full';
       $title.value = data.entries[parseInt($dataEntryId)].title;
@@ -154,3 +163,28 @@ function editNotes(event) {
   }
 }
 $ul.addEventListener('click', editNotes);
+
+function modalAppear(event) {
+  event.preventDefault();
+  $modal.className = '';
+}
+
+function deleteEntry(event) {
+
+  var $cancel = document.querySelector('.cancel');
+  var $confirm = document.querySelector('.confirm');
+  if (event.target === $confirm) {
+    var li = document.querySelector('[data-entry-id="' + data.editing + '"]');
+    data.entries.splice(data.editing, 1);
+    li.remove($ul);
+    $submit.reset();
+    $modal.className = 'hidden';
+    $delete.className = 'delete hidden';
+    switchView('entries');
+  }
+  if (event.target === $cancel) {
+    $modal.className = 'hidden';
+  }
+}
+$modal.addEventListener('click', deleteEntry);
+$delete.addEventListener('click', modalAppear);
